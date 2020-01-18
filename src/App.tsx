@@ -1,10 +1,15 @@
 
 import React from 'react';
 
+import { Layout } from './components';
+import { BurgerBuilder } from './containers';
+
 const App: React.FC = () => {
   return (
     <div>
-      <h3>{process.env.REACT_APP_TITLE}</h3>
+      <Layout>
+        <BurgerBuilder />
+      </Layout>
     </div>
   );
 }
