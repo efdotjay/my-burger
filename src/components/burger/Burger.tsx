@@ -2,15 +2,28 @@
 import React from 'react';
 
 import classes from './Burger.module.css';
-import BurgerIngredient from './burger-ingredient/BurgerIngredient';
+import BurgerIngredient, { Bread, IngredientName } from './burger-ingredient/BurgerIngredient';
 
-const Burger: React.FC = props => {
+export type BurgerIngredients = {
+  [x in IngredientName]?: number
+}
+
+type BurgerProps = { ingredients: BurgerIngredients };
+
+const Burger: React.FC<BurgerProps> = props => {
+  const transformedIngredients: React.ReactElement[][] = (Object.keys(props.ingredients) as IngredientName[])
+    .map(ingredientKey => {
+      return [...Array(props.ingredients[ingredientKey])].map((_, i) => {
+        return <BurgerIngredient key={ingredientKey + i} type={ingredientKey} />;
+      })
+    })
+  ;
+
   return (
     <div className={classes.Burger}>
-      <BurgerIngredient type="bread-top" />
-      <BurgerIngredient type="cheese" />
-      <BurgerIngredient type="meat" />
-      <BurgerIngredient type="bread-bottom" />
+      <BurgerIngredient type={Bread.top} />
+      {transformedIngredients}
+      <BurgerIngredient type={Bread.bottom} />
     </div>
   );
 };
