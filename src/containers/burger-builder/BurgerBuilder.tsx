@@ -2,7 +2,8 @@
 import React, { Fragment } from 'react';
 
 import Burger, { BurgerIngredients } from '../../components/burger/Burger';
-import BuildControls from '../../components/build-controls/BuildControls';
+import BuildControls, { DisabledInfo } from '../../components/build-controls/BuildControls';
+import BurgerIngredient from '../../components/burger/burger-ingredient/BurgerIngredient';
 
 interface BurgerBuilderState {
   ingredients: BurgerIngredients,
@@ -56,6 +57,10 @@ class BurgerBuilder extends React.Component {
 
   render() {
     const { ingredients } = this.state;
+    const disabledInfo: DisabledInfo = (Object.keys(ingredients) as (keyof BurgerIngredients)[]).reduce((info, ingredient) => {
+      info[ingredient] = !ingredients[ingredient];
+      return info;
+    }, {} as DisabledInfo);
 
     return (
       <Fragment>
@@ -63,6 +68,7 @@ class BurgerBuilder extends React.Component {
         <BuildControls
           onClickMore={this.addIngredientHandler}
           onClickLess={this.removeIngredientHandler}
+          disabled={disabledInfo}
         />
       </Fragment>
     );
