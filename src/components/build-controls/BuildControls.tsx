@@ -11,7 +11,10 @@ export type DisabledInfo = { [x in IngredientName]: boolean };
 type BuildControlsProps = {
   onClickMore: (type: IngredientName) => void;
   onClickLess: (type: IngredientName) => void;
+  onClickOrder: () => void;
   disabled: DisabledInfo;
+  totalPrice: number;
+  purchasable: boolean;
 };
 
 const controls: Control[] = [
@@ -23,6 +26,7 @@ const controls: Control[] = [
 
 const BuildControls: React.FC<BuildControlsProps> = (props) => (
   <div className={classes.BuildControls}>
+    <p>Current price: <strong>{props.totalPrice.toFixed(2)}</strong></p>
     {controls.map(control => (
       <BuildControl
         key={control.type}
@@ -32,6 +36,11 @@ const BuildControls: React.FC<BuildControlsProps> = (props) => (
         disabled={props.disabled[control.type]}
       />
     ))}
+    <button
+      disabled={!props.purchasable}
+      className={classes.OrderButton}
+      onClick={props.onClickOrder}
+    >ORDER NOW</button>
   </div>
 );
 
