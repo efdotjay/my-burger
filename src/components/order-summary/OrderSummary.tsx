@@ -1,9 +1,15 @@
 
 import React, { Fragment } from 'react';
+
 import { BurgerIngredients } from '../burger/Burger';
 import { IngredientName } from '../burger/burger-ingredient/BurgerIngredient';
+import Button from '../button/Button';
 
-type OrderSummaryProps = { ingredients: BurgerIngredients };
+type OrderSummaryProps = {
+  ingredients: BurgerIngredients;
+  onCancel: () => void;
+  onContinue: () => void;
+};
 
 const OrderSummary: React.FC<OrderSummaryProps> = props => {
   const ingredientSummary = (Object.keys(props.ingredients) as IngredientName[])
@@ -20,6 +26,8 @@ const OrderSummary: React.FC<OrderSummaryProps> = props => {
       <p>A delicious burger with following ingredients:</p>
       <ul>{ingredientSummary}</ul>
       <p>Continue to checkout?</p>
+      <Button type="Danger" onClick={props.onCancel}>CANCEL</Button>
+      <Button type="Success" onClick={props.onContinue}>CONTINUE</Button>
     </Fragment>
   );
 };
