@@ -9,6 +9,7 @@ type OrderSummaryProps = {
   ingredients: BurgerIngredients;
   onCancel: () => void;
   onContinue: () => void;
+  price: number
 };
 
 const OrderSummary: React.FC<OrderSummaryProps> = props => {
@@ -25,6 +26,7 @@ const OrderSummary: React.FC<OrderSummaryProps> = props => {
       <h3>Your Order</h3>
       <p>A delicious burger with following ingredients:</p>
       <ul>{ingredientSummary}</ul>
+      <p><strong>Total Price: {props.price.toFixed(2)}</strong></p>
       <p>Continue to checkout?</p>
       <Button type="Danger" onClick={props.onCancel}>CANCEL</Button>
       <Button type="Success" onClick={props.onContinue}>CONTINUE</Button>
